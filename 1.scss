@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+body {
+    background: linear-gradient(to right, #2b3e76 0%, #2989d8 100%, #207cca 100%, #1e2b61 100%);
+}
+
+.menu {
+    display: none;
+}
+
+.closeMenu {
+    display: none;
+}
+
+.siteNav {
+    display: flex;
+    align-items: center;
+    color: white;
+    >ul {
+        display: flex;
+        >li {
+            flex-shrink: 0;
+            >a {
+                display: inline-block;
+                padding: 1em;
+            }
+        }
+    }
+    // 定义   @mixin ,@content 媒体查询
+    @mixin phone {
+        @media(max-width: 500px) {
+            @content;
+        }
+    }
+    @mixin ipad {
+        @media (min-width: 501px) and(max-width: 1024px) {
+            @content;
+        }
+    }
+    @mixin pc {
+        @media(min-width: 1025) {
+            @content;
+        }
+    }
+    @keyframes down {
+        0% {
+            transform: translateY(-100%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+    // 使用
+    @include phone {
+        >ul {
+            display: none;
+        }
+        &.open>ul {
+            display: block;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            color: black;
+            animation: down, 1s;
+        }
+        &.open .closeMenu {
+            display: block;
+            color: black;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1;
+        }
+        .menu {
+            display: block;
+            margin-left: auto; //菜单右移
+            margin-right: 20px;
+        }
+    }
+}
+
+// 得出的代码
+// @media (max-width:500px) {
+//     >ul {
+//         display: none;
+//     }
+//     .menu {
+//         display: block;
+//     }
+// }
